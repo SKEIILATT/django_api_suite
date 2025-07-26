@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 urlpatterns = [
    path('admin/', admin.site.urls),
    path("", include("homepage.urls")),
+   path('demo/rest/api/', include('demo_rest_api.urls')),
 ]
 
 # Servir archivos estáticos en desarrollo
