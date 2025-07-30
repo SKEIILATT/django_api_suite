@@ -139,5 +139,5 @@ FIREBASE_CREDENTIALS_PATH = credentials.Certificate("secrets/landing-key.json")
 
 # Inicialice la conexión con el Realtime Database con la clave privada y la URL de referencia
 firebase_admin.initialize_app(FIREBASE_CREDENTIALS_PATH, {
-   'databaseURL': 'https://console.firebase.google.com/project/taxpro-8d340/database/taxpro-8d340-default-rtdb/data/~2F'
+   'databaseURL': 'https://taxpro-8d340-default-rtdb.firebaseio.com/'
 })

@@ -5,12 +5,12 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from firebase_admin import db
-import datetime
+from datetime import datetime
 
 class LandingAPI(APIView):
     # Atributos de la clase
     name = "Landing API"
-    collection_name = "reseñas"  # Nombre de la colección en Firebase Realtime Database
+    collection_name = "data"  # Nombre de la colección en Firebase Realtime Database
 
         
     def get(self, request):
@@ -24,19 +24,19 @@ class LandingAPI(APIView):
       # Devuelve un arreglo JSON
       return Response(data, status=status.HTTP_200_OK)
     
+    
     def post(self, request):
+        # Obtener los datos del cuerpo de la solicitud
+        obj = request.data.copy()
 
-      data = request.data
+        # Obtener la fecha y hora actual en el servidor y formatearla
+        now = datetime.now()
+        am_pm = 'a. m.' if now.strftime('%p').lower() == 'am' else 'p. m.'
+        timestamp = now.strftime(f'%d/%m/%Y, %I:%M:%S {am_pm}')
+        obj['timestamp'] = timestamp
 
-      # Referencia a la colección
-      ref = db.reference(f'{self.collection_name}')
-
-      current_time  = datetime.now()
-      custom_format = current_time.strftime("%d/%m/%Y, %I:%M:%S %p").lower().replace('am', 'a. m.').replace('pm', 'p. m.')
-      data.update({"timestamp": custom_format })
-
-      # push: Guarda el objeto en la colección
-      new_resource = ref.push(data)
-
-      # Devuelve el id del objeto guardado
-      return Response({"id": new_resource.key}, status=status.HTTP_201_CREATED)
+        # Referencia a la colección en Firebase
+        ref = db.reference(self.collection_name)
+        new_ref = ref.push(obj)
+        obj_id = new_ref.key 
+        return Response({'id': obj_id}, status=status.HTTP_201_CREATED)
