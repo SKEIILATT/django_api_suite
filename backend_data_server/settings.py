@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-i&+-ef^aa+0z67jk%iu6cyn&c+kw9%dq2(5-#1(2lhu^n+6q$=
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['JairPalaguachi.pythonanywhere.com']
 
 
 # Application definition
@@ -120,6 +120,8 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+
+STATIC_ROOT = "assets/"
 
 
 # Default primary key field type
